@@ -23,13 +23,22 @@ import Orders from "./user/Orders";
 import Products from "./admin/Products";
 import UpdateProduct from "./admin/UpdateProduct";
 import CartPage from "./components/layouts/CartPage";
+import SingleProduct from "./components/SingleProduct";
+import Search from "./components/layouts/Search";
+import CategoryPage from "./components/CategoryPage";
+import CategoryProduct from "./pages/CategoryProduct";
+
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/category" element={<CategoryPage />} />
+        <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/product/:slug" element={<SingleProduct />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/dashboard" element={<Private />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/profile" element={<Profile />} />

@@ -7,6 +7,7 @@ import HomeCard from "../components/layouts/HomeCard";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "./Auth/Prices";
 import { useCart } from "../authContext/Cart";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -17,6 +18,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useCart();
+  const navigate = useNavigate();
   //get product
   const getProducts = async () => {
     setProgress(20);
@@ -58,9 +60,7 @@ const Home = () => {
         { checked, radio }
       );
       setProgress(70);
-      if (res?.data.success) {
-        setProducts(res.data.product);
-      }
+      setProducts(res?.data.product);
       setProgress(100);
     } catch (error) {
       console.log(error);
@@ -135,6 +135,7 @@ const Home = () => {
                 {categories.map((item) => (
                   <Checkbox
                     key={item._id}
+                    value={item._id}
                     onChange={(e) => handleFilter(e.target.checked, item._id)}
                   >
                     {item.name}
@@ -179,6 +180,7 @@ const Home = () => {
                   localStorage.setItem("cart", JSON.stringify([...cart, item]));
                   toast.success("Added to cart");
                 }}
+                moreInfo={() => navigate(`/product/${item.slug}`)}
               />
             </div>
           ))}

@@ -14,6 +14,7 @@ const Layout = ({
   keywords,
   progress,
 }) => {
+  console.log(title, description);
   return (
     <>
       <div className="container-fluid ">

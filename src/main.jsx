@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./authContext/Auth.jsx";
 import { CartProvider } from "./authContext/Cart.jsx";
-
+import { SearchProvider } from "./authContext/Search.jsx";
+// https://ecommerce24.onrender.com
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
-    <BrowserRouter>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </BrowserRouter>
+    <SearchProvider>
+      <BrowserRouter>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </BrowserRouter>
+    </SearchProvider>
   </AuthProvider>
 );

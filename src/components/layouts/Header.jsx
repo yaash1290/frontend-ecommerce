@@ -4,10 +4,31 @@ import { MdShoppingCart } from "react-icons/md";
 import { useAuth } from "../../authContext/Auth";
 import { toast } from "react-toastify";
 import { useCart } from "../../authContext/Cart";
+import { useSearch } from "../../authContext/Search";
+import axios from "axios";
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
   const navigate = useNavigate();
+  const [value, setValue] = useSearch();
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_APP}/api/v1/product/search/${value.keywords}`
+      );
+      if (data.success) {
+        setValue({ ...value, results: data.results });
+        navigate("/search");
+      } else {
+        toast.error(data.message);
+      }
+      console.log({ ...value });
+    } catch (error) {
+      console.log(error);
+      toast.error("please type something");
+    }
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,12 +50,16 @@ const Header = () => {
               Ecommerce 24
             </Link>
 
-            <form className="d-flex" role="search">
+            <form className="d-flex" role="search" onSubmit={handleSearch}>
               <input
-                className="form-control me-2"
+                className="form-control ms-5 me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={value.keywords}
+                onChange={(e) =>
+                  setValue({ ...value, keywords: e.target.value })
+                }
               />
               <button className="btn btn-outline-success" type="submit">
                 Search
