@@ -1,23 +1,29 @@
-import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { MdShoppingCart } from "react-icons/md";
 import { useAuth } from "../../authContext/Auth";
 import { toast } from "react-toastify";
 import { useCart } from "../../authContext/Cart";
 import { useSearch } from "../../authContext/Search";
 import axios from "axios";
+// import { Model } from "mongoose";
+import { Modal } from "antd";
+// import { setTheme } from "colors";
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
   const navigate = useNavigate();
   const [value, setValue] = useSearch();
+  const [open, setOpen] = useState(true);
+  const [check, setCheck] = useState(false);
+  // const params = useParams();
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
         `${import.meta.env.VITE_APP}/api/v1/product/search/${value.keywords}`
       );
-      if (data.success) {
+      if (data?.success) {
         setValue({ ...value, results: data.results });
         navigate("/search");
       } else {
@@ -29,6 +35,15 @@ const Header = () => {
       toast.error("please type something");
     }
   };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  useEffect(() => {
+    let time = 10000 * 6;
+    setTimeout(() => {
+      setCheck(!check);
+    }, time);
+  }, []);
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -122,6 +137,16 @@ const Header = () => {
                 </>
               ) : (
                 <>
+                  {check && window.location.pathname != "/login" ? (
+                    <Modal
+                      open={open}
+                      title="Please Login/Register"
+                      onCancel={handleCancel}
+                      onOk={() => navigate("/login")}
+                    />
+                  ) : (
+                    <></>
+                  )}
                   <li className="nav-item">
                     <NavLink className="nav-link" to={"/login"}>
                       Login
