@@ -6,6 +6,7 @@ const CategoryForm = ({ name, setName, handleSubmit }) => {
       <form onSubmit={handleSubmit}>
         <div className="mt-3 mb-3">
           <input
+            autoFocus
             type="text"
             className="form-control"
             id="exampleInputEmail1"

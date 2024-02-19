@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,6 +12,7 @@ const Register = () => {
   const [progress, setProgress] = useState(0);
   const [question, setQuestion] = useState("");
   const navigate = useNavigate();
+  const [focus, setFocus] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -49,6 +50,7 @@ const Register = () => {
       setProgress(100);
     }
   };
+
   return (
     <>
       <Layout title={"Regsiter Page"} progress={progress}>
@@ -60,6 +62,7 @@ const Register = () => {
                 Username
               </label>
               <input
+                autoFocus
                 type="text"
                 value={username}
                 onChange={(e) => setName(e.target.value)}

@@ -66,6 +66,7 @@ const Login = () => {
               Email
             </label>
             <input
+              autoFocus
               placeholder="email"
               type="email"
               value={email}

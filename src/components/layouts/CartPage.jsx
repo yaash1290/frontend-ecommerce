@@ -8,6 +8,7 @@ const CartPage = () => {
   const [cart, setCart] = useCart();
   const [auth] = useAuth();
   const [totalPrice, setToatalPrice] = useState(0);
+  console.log(`cart -> `, cart);
   const removeFromCart = (id) => {
     try {
       let myCart = [...cart];
