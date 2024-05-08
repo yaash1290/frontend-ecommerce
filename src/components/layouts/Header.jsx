@@ -62,7 +62,7 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link className="navbar-brand" to={"/"}>
               <MdShoppingCart />
-              Ecommerce 24
+              One1Store
             </Link>
 
             <form className="d-flex" role="search" onSubmit={handleSearch}>
